@@ -1,4 +1,4 @@
-use std::{env, result::Result};
+use std::{env};
 
 use getopts::{Fail, Matches, Options as OptsOptions};
 use thiserror::Error;
