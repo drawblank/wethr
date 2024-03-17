@@ -22,6 +22,23 @@ pub type ArgsResult = Result<Options, ArgsError>;
 
 impl Args {
     #[inline]
+    fn location_url_string_builder() -> String {
+        let mut location_url_string: String = "".to_string();
+        for url_location in 0..URL_LOCATIONS.len() {
+            match url_location {
+                _ => {
+                    location_url_string += &url_location.to_string();
+                    location_url_string += ": ";
+                    location_url_string += URL_LOCATIONS[url_location];
+                    location_url_string += "\n";
+                }
+                
+            }
+        }
+        location_url_string
+    }
+    
+    #[inline]
     fn new() -> OptsOptions {
         let mut opts = OptsOptions::new();
         opts.optflag("m", "metric", "Weather in metric units (compatibility)")
@@ -37,7 +54,7 @@ impl Args {
             .optopt(
                 "p",
                 "location-provider",
-                "Location provider",
+                format!("IP-based location provider API\nPlease choose from the following options:\n{}", Self::location_url_string_builder()).as_str(),
                 format!("0 to {}", URL_LOCATIONS.len() - 1).as_str(),
             )
             .optflag("f", "full-info", "Full weather information")
